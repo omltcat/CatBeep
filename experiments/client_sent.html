@@ -1,0 +1,30 @@
+<!-- FILEPATH: /d:/DCS World/CatBeep/client_sent.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Server Sent Events</title>
+</head>
+<body>
+    <h1>Server Sent Events</h1>
+    <div id="messages"></div>
+
+    <script>
+        // create a new EventSource object and connect to the server
+        const eventSource = new EventSource("http://127.0.0.1:8080");
+
+        // add an event listener to handle incoming messages
+        eventSource.addEventListener("message", (event) => {
+            // get the message data from the event object
+            const message = event.data;
+
+            // create a new paragraph element to display the message
+            const messageElement = document.createElement("p");
+            messageElement.textContent = message;
+
+            // append the message element to the messages div
+            document.getElementById("messages").appendChild(messageElement);
+        });
+    </script>
+</body>
+</html>

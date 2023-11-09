@@ -1,0 +1,23 @@
+{
+    "language": "en",
+    "med_g": {
+        "checkbox": 1,
+        "entry": "7.0",
+        "slider": 19.0
+    },
+    "high_g": {
+        "checkbox": 1,
+        "entry": "8.0",
+        "slider": 49.0
+    },
+    "over_g": {
+        "checkbox": 1,
+        "entry": "9.0",
+        "slider": 86.0
+    },
+    "high_aoa": {
+        "checkbox": 0,
+        "entry": "10.0",
+        "slider": 159.0
+    }
+}

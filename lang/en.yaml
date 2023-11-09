@@ -1,0 +1,16 @@
+title: CatBeep
+current_lang: English
+label:
+  language: Language
+  g_load: G Load
+  aoa: AoA
+checkbox:
+  med_g: Med G Warning
+  high_g: High G Warning
+  over_g: Over G Warning
+  high_aoa: High AoA Warning
+button:
+  start: Start
+status:
+  not_running: Not running
+  lang_restart: Restart program to apply language settings
