@@ -1,23 +1,23 @@
 {
-    "language": "en",
+    "language": "cn",
     "med_g": {
         "checkbox": 1,
-        "entry": "7.0",
-        "slider": 19.0
+        "slider": 60
     },
     "high_g": {
         "checkbox": 1,
-        "entry": "8.0",
-        "slider": 49.0
+        "slider": 75
     },
     "over_g": {
         "checkbox": 1,
-        "entry": "9.0",
-        "slider": 86.0
+        "slider": 90
     },
     "high_aoa": {
         "checkbox": 0,
-        "entry": "10.0",
-        "slider": 159.0
+        "slider": 100
+    },
+    "audio_device": {
+        "id": 18,
+        "name": "Primary Sound Driver"
     }
 }

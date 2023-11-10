@@ -1,7 +1,9 @@
 title: CatBeep
 current_lang: English
+font: "Segoe UI"
 label:
-  language: Language
+  language: Display Language
+  audio_output: Audio Output Device
   g_load: G Load
   aoa: AoA
 checkbox:
@@ -11,6 +13,11 @@ checkbox:
   high_aoa: High AoA Warning
 button:
   start: Start
+menu:
+  chinese: 中文
+  english: English
+  no_audio_device: No Audio Device
 status:
-  not_running: Not running
-  lang_restart: Restart program to apply language settings
+  not_running: No data from DCS received.
+  lang_restart: Restart program to apply language settings.
+  no_audio_device: No Windows DirectSound output device detected.
