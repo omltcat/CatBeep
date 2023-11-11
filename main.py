@@ -5,6 +5,8 @@ from modules.settings_frame import SettingsFrame
 from modules.indicators_frame import IndicatorsFrame
 from modules.status_frame import StatusFrame
 from modules.udp_server import server
+from modules.audio_stream import g_audio_stream, aoa_audio_stream
+from modules.watchdog import watchdog
 
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
@@ -18,16 +20,20 @@ class App(customtkinter.CTk):
 
         self.font = customtkinter.CTkFont(self.strings['font'], 14)
         self.title(self.strings['title'])
-        self.geometry("660x420")
+        self.geometry("700x420")
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=0)
         self.grid_rowconfigure((0), weight=1)
         self.grid_rowconfigure((1), weight=0)
 
         self.vars = {
-            'status': 'not_running',
-            'g': int(self.settings['over_g']['slider']/3),
-            'aoa': int(self.settings['high_aoa']['slider']*2/3)
+            'status': 'idle',
+            'g': int(self.settings['over_g']['slider']/10),
+            'aoa': int(self.settings['high_aoa']['slider']*2/10),
+            'audio_threads_on': False,
+            'audio_can_play': False,
+            'audio_testing': False,
+            'last_received': -1
         }
         
         self.status_frame = StatusFrame(self)
@@ -37,10 +43,30 @@ class App(customtkinter.CTk):
         self.indicators_frame = IndicatorsFrame(self)
         self.indicators_frame.grid(row=0, column=1, padx=(5,10), pady=10, sticky="nsew")
         
+        self.start_audio_threads()
+        self.server_thread = threading.Thread(target=lambda: server(app=self), daemon=True).start()
+        self.watchdog_thread = threading.Thread(target=lambda: watchdog(app=self), daemon=True).start()
+
+    def start_audio_threads(self):
+        self.vars['audio_threads_on'] = True
+        self.g_thread = threading.Thread(target=lambda: g_audio_stream(app=self), daemon=True).start()
+        self.aoa_thread = threading.Thread(target=lambda: aoa_audio_stream(app=self), daemon=True).start()
+        
+    def restart_audio_threads(self):
+        if self.vars['audio_threads_on']:
+            self.vars['audio_threads_on'] = False
+            self.after(500, lambda: self.start_audio_threads())
+        else:
+            self.start_audio_threads()
 
     def read_settings(self):
-        with open('config/settings.json', 'r', encoding='utf-8') as settings_file:
-            self.settings = json.load(settings_file)
+        try:
+            with open('config/settings.json', 'r', encoding='utf-8') as settings_file:
+                self.settings = json.load(settings_file)
+        except FileNotFoundError:
+            with open('config/settings_default.json', 'r', encoding='utf-8') as settings_file:
+                self.settings = json.load(settings_file)
+                self.save_settings()
 
     def save_settings(self):
         with open('config/settings.json', 'w', encoding='utf-8') as settings_file:
@@ -70,5 +96,4 @@ class App(customtkinter.CTk):
 
 
 app = App()
-threading.Thread(target=lambda: server(app=app), daemon=True).start()
 app.mainloop()

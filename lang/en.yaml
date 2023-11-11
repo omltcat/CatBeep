@@ -6,6 +6,8 @@ label:
   audio_output: Audio Output Device
   g_load: G Load
   aoa: AoA
+  g_volume: G Warning Volume
+  aoa_volume: AoA Warning Volume
 checkbox:
   med_g: Med G Warning
   high_g: High G Warning
@@ -18,6 +20,8 @@ menu:
   english: English
   no_audio_device: No Audio Device
 status:
-  not_running: No data from DCS received.
+  idle: No data from DCS received.
+  running: Data from DCS received, program running...
+  audio_testing: Audio testing...
   lang_restart: Restart program to apply language settings.
-  no_audio_device: No Windows DirectSound output device detected.
+  no_audio_device: No MME audio device detected.

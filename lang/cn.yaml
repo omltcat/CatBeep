@@ -6,6 +6,8 @@ label:
   audio_output: 音频输出设备
   g_load: 过载
   aoa: 攻角
+  g_volume: 过载警告音量
+  aoa_volume: 攻角警告音量
 checkbox:
   med_g: 中过载警告
   high_g: 高过载警告
@@ -18,7 +20,9 @@ menu:
   english: English
   no_audio_device: 无音频设备
 status:
-  not_running: 未接收到来自DCS的数据
+  idle: 未接收到来自DCS的数据
+  running: 接收到DCS数据，运行中...
+  audio_testing: 音频测试中...
   lang_restart: 重启程序以应用语言设置
-  no_audio_device: 未检测到 Windows DirectSound 音频输出设备
+  no_audio_device: 未检测到 MME 音频输出设备
 

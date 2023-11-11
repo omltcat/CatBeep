@@ -14,7 +14,7 @@ class CheckBoxSlider():
         self.checkbox_value = customtkinter.IntVar(value=self.app.get_setting(self.name, 'checkbox'))
         self.slider_value = customtkinter.IntVar(value=self.app.get_setting(self.name, 'slider'))
 
-        self.checkbox = customtkinter.CTkCheckBox(self.master, text=self.app.get_string('checkbox', self.name), variable=self.checkbox_value, onvalue=1, offvalue=0, font=self.app.font)
+        self.checkbox = customtkinter.CTkCheckBox(self.master, text=self.app.get_string('checkbox', self.name), variable=self.checkbox_value, onvalue=1, offvalue=0, command=self.checkbox_event, font=self.app.font)
         self.slider = customtkinter.CTkSlider(self.master, from_=self.limits[0], to=self.limits[1], number_of_steps=limits[1], variable=self.slider_value, width=10, command=self.slide_event)
         self.label = customtkinter.CTkLabel(self.master, text=f"{self.slider_value.get()/10}{self.unit}", font=self.app.font)
 
@@ -22,6 +22,9 @@ class CheckBoxSlider():
         self.slider.grid(row=self.row, column=1, padx=(0,20), pady=self.pady, sticky="ew")
         self.label.place(in_=self.slider, anchor="c", relx=-0.1, rely=0.5)
 
+    def checkbox_event(self):
+        value = self.checkbox_value.get()
+        self.app.set_setting(value, self.name, 'checkbox')
     def slide_event(self, value: int):
         lower_blocker = self.app.get_setting(self.blockers[0], 'slider') if self.blockers[0] is not None else -1000
         upper_blocker = self.app.get_setting(self.blockers[1], 'slider') if self.blockers[1] is not None else 1000

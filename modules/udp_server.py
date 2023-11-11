@@ -10,10 +10,12 @@ def server(app, port=14009):
 
     while True:
         data, addr = sock.recvfrom(1024)
+        app.set_var('last_received', time.time())
         array = data.decode('utf-8').split(',')
         g = int(float(array[0])*10)
         aoa = int(float(array[1])*10)
-        app.set_var('g', g)
-        app.set_var('aoa', aoa)
-        app.indicators_frame.g_indicator.update()
-        app.indicators_frame.aoa_indicator.update()
+        if not app.get_var('audio_testing'):
+            app.set_var('g', g)
+            app.set_var('aoa', aoa)
+            app.indicators_frame.g_indicator.update()
+            app.indicators_frame.aoa_indicator.update()

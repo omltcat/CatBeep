@@ -1,5 +1,4 @@
 import customtkinter
-import json, yaml
 import sounddevice as sd
 
 class DropdownMenu():
@@ -43,7 +42,7 @@ class AudioOutputMenu(DropdownMenu):
         super().__init__(master, name, row, pady)
 
         apis = sd.query_hostapis()
-        ds = [i for i in apis if 'DirectSound' in i['name']]
+        ds = [i for i in apis if 'MME' in i['name']]
 
         if len(ds) == 0:
             self.menu.set(self.app.get_string('menu','no_audio_device'))
@@ -59,8 +58,13 @@ class AudioOutputMenu(DropdownMenu):
                 self.menu.set(saved_name)
             else:
                 self.menu.set(self.devices[self.default_device])
+                self.app.set_setting(self.default_device, 'audio_device', 'id')
+                self.app.set_setting(self.devices[self.default_device], 'audio_device', 'name')
 
     def menu_event(self, value):
+        device_id = list(self.devices.keys())[list(self.devices.values()).index(value)]
         self.app.set_setting(value, 'audio_device', 'name')
-        self.app.set_setting(list(self.devices.keys())[list(self.devices.values()).index(value)], 'audio_device', 'id')
-        self.app.save_settings()
+        self.app.set_setting(device_id, 'audio_device', 'id')
+        self.app.save_settings()  
+        self.app.restart_audio_threads()
+        

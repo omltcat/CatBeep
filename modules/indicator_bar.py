@@ -9,7 +9,7 @@ class IndicatorBar():
         self.padx = padx
 
         self.bar = customtkinter.CTkProgressBar(self.master, orientation="vertical", border_width=2, corner_radius=0, width=80, progress_color="green")
-        self.bar.grid(row=0, column=self.column, padx=self.padx, pady=(20,0), sticky="nsew")
+        self.bar.grid(row=0, column=self.column, padx=self.padx, pady=(15,0), sticky="nsew")
         self.label = customtkinter.CTkLabel(self.master, text=self.app.get_string('label', self.name), font=self.app.font)
         self.label.grid(row=1, column=self.column, padx=self.padx, pady=(0,10), sticky="s")
         self.update()
@@ -18,9 +18,6 @@ class IndicatorBar():
         self.bar.set(0.3)
 
 class GIndicator(IndicatorBar):
-    def __init__(self, master, name, column, padx=...):
-        super().__init__(master, name, column, padx)
-
     def update(self, value=None):
         value = self.app.get_var('g') if value is None else value
         threshold_high = self.app.get_setting('high_g', 'slider')
@@ -38,9 +35,6 @@ class GIndicator(IndicatorBar):
         self.bar.set(progress)
 
 class AOAIndicator(IndicatorBar):
-    def __init__(self, master, name, column, padx=...):
-        super().__init__(master, name, column, padx)
-
     def update(self, value=None):
         value = self.app.get_var('aoa') if value is None else value
         threshold_high = self.app.get_setting('high_aoa', 'slider')
