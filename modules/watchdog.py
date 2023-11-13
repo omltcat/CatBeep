@@ -26,6 +26,5 @@ def watchdog(app):
             if i == 10:
                 i = 0
                 if json.dumps(app.settings) != old_settings:
-                    print("new saved")
                     app.save_settings()
                     old_settings = json.dumps(app.settings)

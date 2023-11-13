@@ -9,7 +9,7 @@ local port = 14009
 local udp = socket.udp()
 
 -- Set the socket to broadcast mode
-udp:setoption("broadcast", true)
+-- udp:setoption("broadcast", true)
 
 -- Send a random number between 0 to 10 every second to the UDP socket
 local g = 0
@@ -23,8 +23,9 @@ while true do
     diff = math.random(-5, 5)/10
     aoa = aoa + diff
     aoa = math.min(math.max(0, aoa), 30)
+    
 
-    local message = g .. "," .. aoa
+    local message = g .. "," .. math.rad(aoa)
 
     -- Send the number to the server
     udp:sendto(message, ip, port)

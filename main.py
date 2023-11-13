@@ -44,7 +44,7 @@ class App(customtkinter.CTk):
         self.indicators_frame.grid(row=0, column=1, padx=(5,10), pady=10, sticky="nsew")
         
         self.start_audio_threads()
-        self.server_thread = threading.Thread(target=lambda: server(app=self), daemon=True).start()
+        self.server_thread = threading.Thread(target=lambda: server(app=self, port=self.settings['udp_port']), daemon=True).start()
         self.watchdog_thread = threading.Thread(target=lambda: watchdog(app=self), daemon=True).start()
 
     def start_audio_threads(self):
@@ -60,20 +60,24 @@ class App(customtkinter.CTk):
             self.start_audio_threads()
 
     def read_settings(self):
+        with open('config/settings_default.json', 'r', encoding='utf-8') as settings_default_file:
+            self.settings_default = json.load(settings_default_file)
         try:
             with open('config/settings.json', 'r', encoding='utf-8') as settings_file:
                 self.settings = json.load(settings_file)
         except FileNotFoundError:
-            with open('config/settings_default.json', 'r', encoding='utf-8') as settings_file:
-                self.settings = json.load(settings_file)
-                self.save_settings()
+            self.settings = self.settings_default
+
+        for key, value in self.settings_default.items():
+            if key not in self.settings:
+                self.settings[key] = value
 
     def save_settings(self):
         with open('config/settings.json', 'w', encoding='utf-8') as settings_file:
             json.dump(self.settings, settings_file, indent=4, ensure_ascii=False)
     
     def read_string_table(self):
-        with open(f"lang/{self.settings['language']}.yaml", 'r', encoding='utf-8') as strings_file:
+        with open(f"resources/lang/{self.settings['language']}.yaml", 'r', encoding='utf-8') as strings_file:
             self.strings = yaml.safe_load(strings_file)
 
     def set_var(self, var, value):
@@ -96,4 +100,5 @@ class App(customtkinter.CTk):
 
 
 app = App()
+app.iconbitmap('resources/icon.ico')
 app.mainloop()
