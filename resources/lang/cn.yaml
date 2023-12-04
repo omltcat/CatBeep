@@ -22,7 +22,14 @@ menu:
 status:
   idle: 未接收到来自DCS的数据
   running: 接收到DCS数据，运行中...
+  running_muted: 接收到DCS数据，运行中...（已静音）
   audio_testing: 音频测试中...
   lang_restart: 重启程序以应用语言设置
   no_audio_device: 未检测到 MME 音频输出设备
-
+message_box:
+  help_aoa_title: 攻角数据
+  help_aoa_text: 
+    - 本程序中的攻角单位为“度”，不一定与DCS中显示的数值相同。
+    - '-'
+    - 如F-14座舱内的攻角指示器使用“Unit”单位，
+    - 15Unit（中线）约等于11度。

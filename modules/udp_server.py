@@ -1,5 +1,5 @@
 import socket
-import time, math
+import time
 
 def server(app, port=14009):
     BIND_IP = "127.0.0.1"
@@ -15,8 +15,10 @@ def server(app, port=14009):
         g = int(float(array[0])*10)
         # aoa = int(math.degrees(float(array[1]))*10)
         aoa = int(float(array[1])*10)
+        gear_mute = int(array[2])
         if not app.get_var('audio_testing'):
             app.set_var('g', g)
             app.set_var('aoa', aoa)
+            app.set_var('gear_mute', gear_mute)
             app.indicators_frame.g_indicator.update()
             app.indicators_frame.aoa_indicator.update()

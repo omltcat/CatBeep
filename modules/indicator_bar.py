@@ -22,7 +22,7 @@ class GIndicator(IndicatorBar):
         value = self.app.get_var('g') if value is None else value
         threshold_high = self.app.get_setting('high_g', 'slider')
         threshold_med = self.app.get_setting('med_g', 'slider')
-        limit = self.app.get_setting('over_g', 'slider')
+        limit = max(1, self.app.get_setting('over_g', 'slider'))
 
         if value >= threshold_high:
             self.bar.configure(progress_color="red")
@@ -38,7 +38,7 @@ class AOAIndicator(IndicatorBar):
     def update(self, value=None):
         value = self.app.get_var('aoa') if value is None else value
         threshold_high = self.app.get_setting('high_aoa', 'slider')
-        limit = threshold_high * 2
+        limit = max(1, threshold_high * 2)
         
         if value >= threshold_high:
             self.bar.configure(progress_color="red")

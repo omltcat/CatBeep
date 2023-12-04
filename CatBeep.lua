@@ -28,7 +28,20 @@ end
 function LuaExportAfterNextFrame()
 	local currentTime = LoGetModelTime()
 	if currentTime >= CatBeep.LastExportTime + 0.05 then
-		local message = string.format("%.2f,%.4f",LoGetAccelerationUnits().y,LoGetAngleOfAttack())
+		local airframe = LoGetSelfData().Name
+		local gearDown = false
+		local gearMute = 0
+		if CatBeep.GearIndicator[airframe] then
+			local gear = 0
+		elseif CatBeep.FC3[airframe] then
+			gearDown = LoGetMechInfo().gear.value <= 1
+		end
+		
+		if gearDown then
+			gearMute = 1
+		end
+
+		local message = string.format("%.2f,%.4f,%d",LoGetAccelerationUnits().y,LoGetAngleOfAttack(), gearMute)
 		CatBeep.UDPsender:send(message)
 		CatBeep.LastExportTime = currentTime
 	end
@@ -49,3 +62,19 @@ function LuaExportStop()
 		CatBeep.PrevExport.LuaExportStop()
 	end
 end
+
+CatBeep.GearIndicator = {
+	['F-14B'] = 8301
+}
+
+CatBeep.FC3 = {
+	'A-10A',
+	'F-15C',
+	'J-11A',
+	'MiG-29A',
+	'MiG-29S',
+	'Su-25',
+	'Su-25T',
+	'Su-27',
+	'Su-33'
+}

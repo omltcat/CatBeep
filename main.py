@@ -30,6 +30,7 @@ class App(customtkinter.CTk):
             'status': 'idle',
             'g': int(self.settings['over_g']['slider']/10),
             'aoa': int(self.settings['high_aoa']['slider']*2/10),
+            'gear_mute': 0,
             'audio_threads_on': False,
             'audio_can_play': False,
             'audio_testing': False,

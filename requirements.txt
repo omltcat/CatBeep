@@ -1,0 +1,6 @@
+customtkinter
+threading
+json
+yaml
+sounddevice
+soundfile

@@ -1,7 +1,8 @@
 import customtkinter
+import modules.message_box as message_box
 
 class CheckBoxSlider():
-    def __init__(self, master, name, row, pady=(20,0), limits=(0,120), unit=" G", blockers=(None, None)):
+    def __init__(self, master, name, row, pady=(20,0), limits=(0,120), unit=" G", blockers=(None, None), help=None):
         self.master = master
         self.app = master.app
         self.name = name
@@ -21,6 +22,10 @@ class CheckBoxSlider():
         self.checkbox.grid(row=self.row, column=0, padx=(20,0), pady=self.pady, sticky="w")
         self.slider.grid(row=self.row, column=1, padx=(0,20), pady=self.pady, sticky="ew")
         self.label.place(in_=self.slider, anchor="c", relx=-0.1, rely=0.5)
+
+        if help is not None:
+            self.help_button = customtkinter.CTkButton(self.master, fg_color='#404040', text="?", width=10, height=10, font=self.app.font, command=lambda: message_box.help(help, self.app))
+            self.help_button.place(in_=self.checkbox, anchor="c", relx=1.13, rely=0.5)
 
     def checkbox_event(self):
         value = self.checkbox_value.get()

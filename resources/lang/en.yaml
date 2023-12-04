@@ -22,6 +22,10 @@ menu:
 status:
   idle: No data from DCS received.
   running: Data from DCS received, program running...
+  running_muted: Data from DCS received, program running... (muted)
   audio_testing: Audio testing...
   lang_restart: Restart program to apply language settings.
   no_audio_device: No MME audio device detected.
+message_box:
+  help_aoa_title: AoA Data
+  help_aoa_text: AoA unit in this program is "degree", which may not be the same as the value displayed in DCS. For example, the AoA indicator in F-14 cockpit uses "Unit". 15 Unit (centerline) is about 11 degrees.
